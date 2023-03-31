@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useGlobalState } from "../context";
 import Modal from "./Modal";
@@ -7,12 +7,36 @@ const Navbar = () => {
     const [loading, setLoading] = useState(false)
     const { logged, user } = useGlobalState()
     const [mark, setMark] = useState(false)
+    const [watchTip, setWatchTip] = useState(false)
     const [shift, setShift] = useState("1")
+    const [tips, setTips] = useState(0)
     const onClose = () => {
         setMark(false)
     }
+    const onCloseTip = () => {
+        setWatchTip(false)
+    }
     const onOpen = () => {
         setMark(true)
+    }
+    const onOpenTip = () => {
+        setWatchTip(true)
+        setLoading(true)
+        fetch(`${process.env.API}/api/user/tips/${user.cc}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            if(!res.ok){
+                setLoading(false)
+                return
+            }
+            return res.json()
+        }).then(res => {
+            setLoading(false)
+            setTips(res.totalTips)
+        })
     }
     const markAssist = () => {
         const formatDate = formattedDate()
@@ -52,6 +76,7 @@ const Navbar = () => {
                             <div className="flex items-center justify-start sm:items-stretch sm:justify-start">
                                 <div className="flex justify-center space-x-2">
                                     <button
+                                        onClick={onOpenTip}
                                         type="button"
                                         className="inline-block rounded bg-white px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-gray-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
                                         Ver propinas
@@ -94,6 +119,21 @@ const Navbar = () => {
                                     }
                                     
                                 </div>
+                            </div>
+                        </div>
+                    </Modal>
+                    <Modal isOpen={watchTip} onClose={onCloseTip}>
+                        <div className="flex justify-center">
+                            <div
+                                className="block max-w-sm"
+                            >
+                                <h5
+                                    className="mb-2 text-xl font-medium leading-tight text-gray-800">
+                                    {user.name}
+                                </h5>
+                                <p className="mb-4 text-base text-gray-800">
+                                    ${!loading ? tips : "Cargando..."}
+                                </p>
                             </div>
                         </div>
                     </Modal>
