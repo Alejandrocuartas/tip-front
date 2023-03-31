@@ -1,8 +1,21 @@
 import React, { useState, createContext, useContext } from "react";
-const logContext = createContext<number>(1);
+import { GlobalContextType } from "../types";
+//@ts-ignore
+const logContext = createContext<GlobalContextType>();
 const Context = ({ children }: { children: JSX.Element }) => {
+    const [logged, setLogged] = useState(false)
+    const [user, setUser] = useState({
+        cc: "",
+        name: "",
+        isCashier: false,
+    })
     return (
-        <logContext.Provider value={1}>
+        <logContext.Provider value={{
+            user,
+            logged,
+            setLogged,
+            setUser
+        }}>
             {children}
         </logContext.Provider>
     );

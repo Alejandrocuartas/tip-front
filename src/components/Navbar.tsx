@@ -1,9 +1,14 @@
-import React from 'react';
+import React from "react";
+import { useGlobalState } from "../context";
+const Navbar = () => {
+    const { logged } = useGlobalState()
+    return (<div>
+        {
+            logged ? (
+                <h1>Hola</h1>
+            ) : null
+        }
+    </div>)
+}
 
-const NavigationBar = () => {
-  return (
-  <h1>hi</h1>
-  );
-};
-
-export default NavigationBar;
+export default Navbar
