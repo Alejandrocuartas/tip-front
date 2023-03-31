@@ -3,4 +3,6 @@ export type GlobalContextType = {
     user: any
     logged: any
     setLogged: any
+    day: any,
+    setDay: any
 };

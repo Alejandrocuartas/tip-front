@@ -21,7 +21,7 @@ const Login = () => {
         }).then(res => {
             if(!res){
                 setLoading(false)
-                alert("Hubo un error.")
+                return alert("Hubo un error.")
             }
             return res.json()
         }).then(data => {

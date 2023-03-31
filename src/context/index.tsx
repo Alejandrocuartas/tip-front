@@ -9,12 +9,20 @@ const Context = ({ children }: { children: JSX.Element }) => {
         name: "",
         isCashier: false,
     })
+    const [day, setDay] = useState({
+        date: "",
+        isDay: false,
+        tips: 0,
+        employees: []
+    })
     return (
         <logContext.Provider value={{
             user,
             logged,
             setLogged,
-            setUser
+            setUser,
+            day, 
+            setDay
         }}>
             {children}
         </logContext.Provider>
