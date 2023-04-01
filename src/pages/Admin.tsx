@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Admin = () => {
     const [loading, setLoading] = React.useState(false)
     const [shift, setShift] = React.useState("1")
-    const {user, logged} = useGlobalState()
+    const {user, logged, setDay} = useGlobalState()
     const updateTips = (e: any) => {
         e.preventDefault()
         let isDay = false;
@@ -19,6 +19,7 @@ const Admin = () => {
         const dateF: string = form.get("date")
         const tips = form.get("tips")
         const date = dateF.split("-").reverse().join("-")
+        setLoading(true)
         fetch(`${process.env.API}/api/day/tips`, {
             method: "PATCH",
             headers: {
@@ -32,11 +33,19 @@ const Admin = () => {
             })
         }).then(res => {
             if(!res){
+                setLoading(false);
                 return alert("Hubo un error")
             }
             return res.json()
         }).then(res => {
-            console.log(res)
+            setLoading(false)
+            const {day} = res
+            setDay({
+                date: day.date,
+                isDay: day.isDay,
+                employees: day.employees
+            })
+            alert("Listo")
         })
     }
     if(!logged || !user.isCashier){

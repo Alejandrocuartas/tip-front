@@ -1,10 +1,9 @@
 export const formattedDate = () => {
-    const currentDate = new Date()
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1; // month is zero-indexed, so add 1
-    const year = currentDate.getFullYear();
-    const formatDate = `${day}-${month < 10 ? '0' : ''}${month}-${year}`;
-    return formatDate;
+  const currentDate = new Date()
+  const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+  //@ts-ignore
+  const formattedDate = currentDate.toLocaleDateString('en-GB', options);
+  return formattedDate.replace(/\//g, '-')
 }
 
 export const isDayShift = () => {

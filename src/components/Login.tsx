@@ -11,6 +11,10 @@ const Login = () => {
         e.preventDefault()
         const name = form.get("name")
         const cc = form.get("cc")
+        const confirm = form.get("confirm")
+        if(cc != confirm){
+            return alert("Cédula incorrecta. Escribila bien.")
+        }
         setLoading(true)
         fetch(`${process.env.API}/api/user/auth`, {
             headers: {
@@ -57,6 +61,19 @@ const Login = () => {
                                 required
                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                 placeholder="número de cédula"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="confirm" className="sr-only">
+                                Cédula confirmar
+                            </label>
+                            <input
+                                id="confirm"
+                                name="confirm"
+                                type="number"
+                                required
+                                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                                placeholder="confirma cédula"
                             />
                         </div>
                         <div>
