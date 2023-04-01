@@ -3,7 +3,9 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useGlobalState } from "../context";
 import Modal from "./Modal";
 import { formattedDate } from "../helpers/formattedDate";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const { logged, user } = useGlobalState()
     const [mark, setMark] = useState(false)
@@ -93,6 +95,18 @@ const Navbar = () => {
                                     </button>
                                 </div>
                             </div>
+                            {user.isCashier ? (
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                                    <div className="flex justify-center space-x-2">
+                                        <button
+                                            onClick={() => navigate("/admin")}
+                                            type="button"
+                                            className="inline-block rounded bg-white px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-gray-800 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]">
+                                            Admin
+                                        </button>
+                                    </div>
+                                </div>): null
+                            }
                         </div>
                     </div>
                     <Modal isOpen={mark} onClose={onClose}>

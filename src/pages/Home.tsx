@@ -43,7 +43,7 @@ const Home = () => {
         )
     }
     return (
-        <h1>hi</h1>
+        <h1>En construcción</h1>
     );
 };
 
