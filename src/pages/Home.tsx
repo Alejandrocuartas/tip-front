@@ -2,8 +2,9 @@ import * as React from "react";
 import { formattedDate, isDayShift } from "../helpers/formattedDate";
 import { useGlobalState } from "../context";
 import { Link } from "react-router-dom";
+import Employee from "../components/Employee";
 const Home = () => {
-    const {logged, setDay} = useGlobalState()
+    const {logged, setDay, day} = useGlobalState()
     React.useEffect(() => {
         if (!logged) {
             return
@@ -42,8 +43,17 @@ const Home = () => {
             </div>
         )
     }
+    if(day.employees.length === 0){
+        <h1>Aún no hay personas registradas hoy.</h1>
+    }
     return (
-        <h1>En construcción</h1>
+        <div>
+            {
+                day.employees.map((e: any) => {
+                    return <Employee name={e.name}/>
+                })
+            }
+        </div>
     );
 };
 
