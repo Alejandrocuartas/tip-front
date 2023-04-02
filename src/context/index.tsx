@@ -8,6 +8,7 @@ const Context = ({ children }: { children: JSX.Element }) => {
         cc: "",
         name: "",
         isCashier: false,
+        id: "",
     })
     const [day, setDay] = useState({
         date: "",

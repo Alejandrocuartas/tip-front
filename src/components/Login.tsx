@@ -33,7 +33,8 @@ const Login = () => {
             setUser({
                 name: data.employee.name,
                 cc: data.employee.cc,
-                isCashier: data.employee.isCashier
+                isCashier: data.employee.isCashier,
+                id: data.employee._id
             })
             setLogged(true)
             navigate("/home")
