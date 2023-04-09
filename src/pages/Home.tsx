@@ -4,7 +4,9 @@ import { useGlobalState } from "../context";
 import { Link } from "react-router-dom";
 import Employee from "../components/Employee";
 const Home = () => {
-    const {logged, setDay, day} = useGlobalState()
+    const { logged, setDay, day } = useGlobalState()
+    const [isDay, setIsDay] = React.useState(isDayShift())
+    const [date, setDate] = React.useState(formattedDate())
     React.useEffect(() => {
         if (!logged) {
             return
@@ -15,24 +17,24 @@ const Home = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                date: formattedDate(),
-                isDay: isDayShift(),
+                date,
+                isDay,
             }),
         }).then(res => {
-            if(!res){
+            if (!res) {
                 return alert("Hubo un error")
             }
             return res.json()
         }).then(res => {
-            const {day} = res
+            const { day } = res
             setDay({
                 date: day.date,
                 isDay: day.isDay,
                 employees: day.employees
             })
         })
-    })
-    if(!logged){
+    }, [isDay, date])
+    if (!logged) {
         return (
             <div className="flex justify-center space-x-2">
                 <Link
@@ -43,16 +45,42 @@ const Home = () => {
             </div>
         )
     }
-    if(day.employees.length === 0){
+    if (day.employees.length === 0) {
         <h1>Aún no hay personas registradas hoy.</h1>
     }
     return (
-        <div>
-            {
-                day.employees.map((e: any) => {
-                    return <Employee name={e.name}/>
-                })
-            }
+        <div className="flex-col">
+            <div className="flex-row">
+                <div>
+                    <input type="date" max={formattedDate().split("-").reverse().join("-")} onChange={(e) => setDate(e.target.value.split("-").reverse().join("-"))} defaultValue={formattedDate().split("-").reverse().join("-")} />
+                </div>
+                <div>
+                    <div className="flex justify-center">
+                        <div className="mb-3 mt-3 bg-gray-600 xl:w-96">
+                            <select data-te-select-init onChange={(e) => {
+                                if (e.target.value === "1") {
+                                    setIsDay(false)
+                                }
+                                if (e.target.value === "2") {
+                                    setIsDay(true)
+                                }
+                            }}>
+                                <option value="0">Selecciona turno</option>
+                                <option value="1">Turno noche</option>
+                                <option value="2">Turno día</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div>
+                {
+                    day.employees.map((e: any) => {
+                        return <Employee key={e._id} name={e.name} />
+                    })
+                }
+            </div>
         </div>
     );
 };

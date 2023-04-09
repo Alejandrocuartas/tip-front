@@ -1,17 +1,18 @@
 import * as React from "react";
 import { useGlobalState } from "../context";
 import { Link } from "react-router-dom";
+import { formattedDate } from "../helpers/formattedDate";
 const Admin = () => {
     const [loading, setLoading] = React.useState(false)
     const [shift, setShift] = React.useState("1")
-    const {user, logged, setDay} = useGlobalState()
+    const { user, logged, setDay } = useGlobalState()
     const updateTips = (e: any) => {
         e.preventDefault()
         let isDay = false;
-        if(shift == "1"){
+        if (shift == "1") {
             return alert("Debes seleccionar un turno.")
         }
-        if(shift == "2"){
+        if (shift == "2") {
             isDay = true
         }
         const form = new FormData(e.target)
@@ -32,14 +33,14 @@ const Admin = () => {
                 cc: user.cc
             })
         }).then(res => {
-            if(!res){
+            if (!res) {
                 setLoading(false);
                 return alert("Hubo un error")
             }
             return res.json()
         }).then(res => {
             setLoading(false)
-            const {day} = res
+            const { day } = res
             setDay({
                 date: day.date,
                 isDay: day.isDay,
@@ -48,8 +49,8 @@ const Admin = () => {
             alert("Listo")
         })
     }
-    if(!logged || !user.isCashier){
-        return(
+    if (!logged || !user.isCashier) {
+        return (
             <div className="flex justify-center space-x-2">
                 <Link
                     to="/"
@@ -91,20 +92,21 @@ const Admin = () => {
                                 id="date"
                                 name="date"
                                 type="date"
+                                defaultValue={formattedDate().split("-").reverse().join("-")}
                                 required
                                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                             />
                         </div>
                         <div>
-                        <div className="flex justify-center">
-                            <div className="mb-3 mt-3 bg-gray-600 xl:w-96">
-                                <select data-te-select-init onChange={(e) => setShift(e.target.value)}>
-                                    <option value="1">Selecciona turno</option>
-                                    <option value="2">Día</option>
-                                    <option value="3">Noche</option>
-                                </select>
+                            <div className="flex justify-center">
+                                <div className="mb-3 mt-3 bg-gray-600 xl:w-96">
+                                    <select data-te-select-init onChange={(e) => setShift(e.target.value)}>
+                                        <option value="1">Selecciona turno</option>
+                                        <option value="2">Día</option>
+                                        <option value="3">Noche</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div>
