@@ -2,6 +2,7 @@ import * as React from "react";
 import { useGlobalState } from "../context";
 import { Link } from "react-router-dom";
 import { formattedDate } from "../helpers/formattedDate";
+import MissedEmployee from "../components/MissedEmployeeForm";
 const Admin = () => {
     const [loading, setLoading] = React.useState(false)
     const [shift, setShift] = React.useState("1")
@@ -65,6 +66,11 @@ const Admin = () => {
             <div className="w-full max-w-md space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                        Ingresar propinas
+                    </h2>
+                </div>
+                <div>
+                    <h2 className="mt-6 text-center text-1xl font-bold tracking-tight text-gray-900">
                         Ingresa la propina y la fecha
                     </h2>
                 </div>
@@ -124,6 +130,8 @@ const Admin = () => {
                         )}
                     </div>
                 </form>
+                <hr className="border-3 border-gray-800" />
+                <MissedEmployee></MissedEmployee>
             </div>
         </div>
     );
