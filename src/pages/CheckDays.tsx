@@ -3,7 +3,7 @@ import { formattedDate, isDayShift } from "../helpers/formattedDate";
 import { useGlobalState } from "../context";
 import { Link } from "react-router-dom";
 import Employee from "../components/Employee";
-const Home = () => {
+const CheckDays = () => {
     const { logged, setDay, day } = useGlobalState()
     const [isDay, setIsDay] = React.useState(isDayShift())
     const [date, setDate] = React.useState(formattedDate())
@@ -50,10 +50,28 @@ const Home = () => {
     }
     return (
         <div className="flex-col">
-            <div className="bg-white px-6 py-2 border-b border-gray-800 w-full flex justify-center items-center">
-                <button className="inline-block rounded bg-gray-400 px-6 pb-2 pt-2.5 text-xs text-center font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:bg-primary-accent-100 focus:bg-primary-accent-100 focus:outline-none focus:ring-0 active:bg-primary-accent-200">
-                    <Link to="/days">Ver asistencia de otros días</Link>
-                </button>
+            <div className="flex-row">
+                <div>
+                    <input type="date" max={formattedDate().split("-").reverse().join("-")} onChange={(e) => setDate(e.target.value.split("-").reverse().join("-"))} defaultValue={formattedDate().split("-").reverse().join("-")} />
+                </div>
+                <div>
+                    <div className="flex justify-center">
+                        <div className="mb-3 mt-3 bg-gray-600 xl:w-96">
+                            <select data-te-select-init onChange={(e) => {
+                                if (e.target.value === "1") {
+                                    setIsDay(false)
+                                }
+                                if (e.target.value === "2") {
+                                    setIsDay(true)
+                                }
+                            }}>
+                                <option value="0">Selecciona turno</option>
+                                <option value="1">Turno noche</option>
+                                <option value="2">Turno día</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
             <hr className="border-3 border-gray-800" />
             <div>
@@ -67,4 +85,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default CheckDays;
