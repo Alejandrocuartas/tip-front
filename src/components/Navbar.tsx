@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
-    const { logged, user, day } = useGlobalState()
+    const { logged, user, day, setDay } = useGlobalState()
     const [watchTip, setWatchTip] = useState(false)
     const [tips, setTips] = useState(0)
     const onCloseTip = () => {
@@ -48,6 +48,14 @@ const Navbar = () => {
             if (!res.ok) {
                 return alert(`error: probablemente elegiste turno incorrecto. Intentalo de nuevo.`)
             }
+            return res.json()
+        }).then(res => {
+            const { day } = res
+            setDay({
+                date: day.date,
+                isDay: day.isDay,
+                employees: day.employees
+            })
             alert("Ya marcaste asistencia.")
         })
     }
