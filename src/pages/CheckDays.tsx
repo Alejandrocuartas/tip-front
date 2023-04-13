@@ -30,7 +30,8 @@ const CheckDays = () => {
             setDay({
                 date: day.date,
                 isDay: day.isDay,
-                employees: day.employees
+                employees: day.employees,
+                tips: day.tips
             })
         })
     }, [isDay, date])
@@ -50,9 +51,11 @@ const CheckDays = () => {
     }
     return (
         <div className="flex-col">
+
             <div className="flex-row">
-                <div>
+                <div className="flex justify-between">
                     <input type="date" max={formattedDate().split("-").reverse().join("-")} onChange={(e) => setDate(e.target.value.split("-").reverse().join("-"))} defaultValue={formattedDate().split("-").reverse().join("-")} />
+                    <span>Propinas del día: ${day.tips}</span>
                 </div>
                 <div>
                     <div className="flex justify-center">
@@ -77,7 +80,7 @@ const CheckDays = () => {
             <div>
                 {
                     day.employees.map((e: any) => {
-                        return <Employee key={e._id} name={e.name} />
+                        return <Employee key={e._id} cc={e.cc} name={e.name} />
                     })
                 }
             </div>
