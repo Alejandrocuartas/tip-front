@@ -51,6 +51,7 @@ const CheckDays = () => {
     }
     return (
         <div className="flex-col">
+
             <div className="flex-row">
                 <div className="flex justify-between">
                     <input type="date" max={formattedDate().split("-").reverse().join("-")} onChange={(e) => setDate(e.target.value.split("-").reverse().join("-"))} defaultValue={formattedDate().split("-").reverse().join("-")} />
@@ -79,7 +80,7 @@ const CheckDays = () => {
             <div>
                 {
                     day.employees.map((e: any) => {
-                        return <Employee key={e._id} name={e.name} />
+                        return <Employee key={e._id} cc={e.cc} name={e.name} />
                     })
                 }
             </div>

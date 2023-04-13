@@ -30,7 +30,8 @@ const Home = () => {
             setDay({
                 date: day.date,
                 isDay: day.isDay,
-                employees: day.employees
+                employees: day.employees,
+                tips: day.tips,
             })
         })
     }, [isDay, date])
@@ -59,7 +60,7 @@ const Home = () => {
             <div>
                 {
                     day.employees.map((e: any) => {
-                        return <Employee key={e._id} name={e.name} />
+                        return <Employee key={e._id} cc={e.cc} name={e.name} />
                     })
                 }
             </div>

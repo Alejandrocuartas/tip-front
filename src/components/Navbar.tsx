@@ -54,7 +54,8 @@ const Navbar = () => {
             setDay({
                 date: day.date,
                 isDay: day.isDay,
-                employees: day.employees
+                employees: day.employees,
+                tips: day.tips,
             })
             alert("Ya marcaste asistencia.")
         })
