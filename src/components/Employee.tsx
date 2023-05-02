@@ -3,7 +3,7 @@ import React from "react";
 import Modal from "./Modal";
 import { useGlobalState } from "../context";
 
-const Employee = ({ name, cc }: { name: string, cc: string }) => {
+const Employee = ({ name, cc, tips, t = false }: { name: string, cc: string, tips?: number, t?: boolean }) => {
     const { user, day, setDay } = useGlobalState()
     const [loading, setLoading] = React.useState(false)
     const [isOpen, setOpen] = React.useState(false)
@@ -11,6 +11,9 @@ const Employee = ({ name, cc }: { name: string, cc: string }) => {
         setOpen(false)
     }
     const onOpen = () => {
+        if (t) {
+            return
+        }
         if (user.isCashier) {
             setOpen(true)
         }
@@ -60,8 +63,13 @@ const Employee = ({ name, cc }: { name: string, cc: string }) => {
                 <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
                     {name}
                 </h6>
-
-
+                {
+                    tips ? (
+                        <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
+                            {tips}
+                        </h6>
+                    ) : null
+                }
             </div>
             <Modal onClose={onClose} isOpen={isOpen}>
                 <div data-te-modal-body-ref className="relative p-4">Desea borrar a {name} de {day.date}?</div>
