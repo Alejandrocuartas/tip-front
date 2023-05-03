@@ -53,16 +53,19 @@ const Employee = ({ name, cc, tips, t = false }: { name: string, cc: string, tip
         <>
             <div
                 onClick={onOpen}
-                className="bg-white hover:bg-blue-300 px-6 py-2 border-b border-gray-800 w-full flex justify-start items-center cursor-pointer"
+                className="bg-white hover:bg-blue-300 px-6 py-2 border-b border-gray-800 w-full flex justify-between items-center cursor-pointer"
             >
-                <img
-                    className="h-12 w-12 rounded-full"
-                    src="https://th.bing.com/th/id/OIP.YOOu1TE3CHBdCFhVjHaYxQHaHa?pid=ImgDet&rs=1"
-                    alt="user profile"
-                />
-                <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
-                    {name}
-                </h6>
+                <div className="flex justify-start items-center">
+                    <img
+                        className="h-12 w-12 rounded-full"
+                        src="https://th.bing.com/th/id/OIP.YOOu1TE3CHBdCFhVjHaYxQHaHa?pid=ImgDet&rs=1"
+                        alt="user profile"
+                    />
+                    <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
+                        {name}
+                    </h6>
+                </div>
+
                 {
                     tips ? (
                         <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">

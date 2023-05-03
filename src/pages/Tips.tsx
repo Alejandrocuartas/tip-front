@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Employee from "../components/Employee";
 const Tips = () => {
     const [employees, setEmployees] = React.useState([])
+    const [total, setTotal] = React.useState(0)
     const { logged, user } = useGlobalState()
     if (!logged) {
         return (
@@ -23,7 +24,16 @@ const Tips = () => {
             }
         }).then(r => r.json()).then(r => {
             setEmployees(r.employeesTips)
-        }).catch(e => alert("Error: intenta de nuevo."))
+            let totalTips = 0;
+            for (let i = 0; i < r.employeesTips.length; i++) {
+                const value = Number(r.employeesTips[i].totalTips.toFixed(0)) - Number(r.employeesTips[i].totalTips.toFixed(0)) % 1000
+                totalTips += value
+            }
+            setTotal(totalTips)
+        }).catch(e => {
+            console.log(e.message)
+            alert("Error: intenta de nuevo.")
+        })
     }, [])
     return (
         <div className="flex-col">
@@ -33,6 +43,17 @@ const Tips = () => {
                         return <Employee key={e._id} t={true} cc={e.cc} name={e.name} tips={e.totalTips} />
                     })
                 }
+                <div
+                    className="bg-white hover:bg-blue-300 px-6 py-2 border-b border-gray-800 w-full flex justify-between items-center cursor-pointer"
+                >
+
+                    <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
+                        Total:
+                    </h6>
+                    <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
+                        ${total || 0}
+                    </h6>
+                </div>
             </div>
         </div>
     );
