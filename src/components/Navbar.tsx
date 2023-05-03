@@ -30,7 +30,8 @@ const Navbar = () => {
         }).then((res: { totalTips: number }) => {
             setLoading(false)
             const int = res.totalTips.toFixed(0)
-            setTips(Number(int))
+            const resid = Number(res.totalTips.toFixed(0)) % 1000
+            setTips(Number(int) - resid)
         })
     }
     const markAssist = () => {

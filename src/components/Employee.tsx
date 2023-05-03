@@ -66,7 +66,7 @@ const Employee = ({ name, cc, tips, t = false }: { name: string, cc: string, tip
                 {
                     tips ? (
                         <h6 className="mx-4 font-medium leading-tight text-base mt-0 mb-2 text-white-600">
-                            {tips}
+                            ${tips ? Number(tips.toFixed(0)) - Number(tips.toFixed(0)) % 1000 : 0}
                         </h6>
                     ) : null
                 }
